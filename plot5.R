@@ -3,12 +3,12 @@ if(sum(c("NEI","SCC") %in% ls())!=2)
     source("./load_data.R")
 
 # Coal Related Source
-motor_scc <- SCC[grep("Motor Vehicles",SCC$Short.Name,ignore.case = TRUE),]
-
+motor_scc <- SCC[grep("Vehicle", SCC$EI.Sector ,ignore.case = TRUE),]
 
 # Group by County/Year
 motor_data <- NEI %>%
-    filter(fips=="24510",SCC%in%motor_scc$SCC) %>%
+    filter(SCC %in%motor_scc$SCC) %>%
+    filter(fips=="24510") %>%
     group_by(year) %>%
     summarize(total_pm25=sum(Emissions))
 
